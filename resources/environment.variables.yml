@@ -1,0 +1,4 @@
+BASE_URL: "https://homestaybooking.id.vn"
+BROWSER: "chrome"
+VALID_USER: "customer@gmail.com"
+VALID_PASSWORD: "password"

@@ -1,0 +1,19 @@
+# Ignore rules
+__pycache__/
+*.pyc
+.env
+tests_draft/
+
+# Local backup tests
+tests/AccountTests.robot
+tests/AdminTests.robot
+tests/AdvancedCheckoutTests.robot
+tests/SearchTests.robot
+resources/page_objects/CheckoutPage.resource
+resources/page_objects/ListingPage.resource
+resources/page_objects/ProfilePage.resource
+resources/page_objects/RoomDetailPage.resource
+resources/locators/CheckoutPageLocators.py
+resources/locators/ListingPageLocators.py
+resources/locators/ProfilePageLocators.py
+resources/locators/RoomDetailPageLocators.py
