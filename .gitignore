@@ -1,4 +1,8 @@
 # Ignore rules
+results/selenium-screenshot-*.png
+check_live.py
+live_buttons.txt
+live_inputs.txt
 __pycache__/
 *.pyc
 .env
