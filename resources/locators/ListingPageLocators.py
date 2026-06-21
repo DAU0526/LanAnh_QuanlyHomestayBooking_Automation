@@ -1,0 +1,5 @@
+ROOM_CARD = "css:.group.block.h-full.cursor-pointer"
+FIRST_ROOM = "xpath:(//div[contains(@class, 'group block h-full cursor-pointer')])[1]"
+MIN_PRICE_INPUT = "xpath://input[@placeholder='Từ']"
+MAX_PRICE_INPUT = "xpath://input[@placeholder='Đến']"
+FILTER_BUTTON = "xpath://button[span[contains(text(), 'Tìm Homestay')]]"

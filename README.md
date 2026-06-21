@@ -217,6 +217,45 @@ Test Cases:
 
 ---
 
+# Search & Filter Testing
+
+## Search
+
+File:
+
+```text
+tests/SearchTests.robot
+```
+
+Test Cases:
+
+| ID | Description |
+|-|-|
+| TC_01 | User Can Search By Location |
+| TC_02 | User Can Filter Rooms By Price |
+
+---
+
+# Booking & Checkout Testing
+
+## Checkout
+
+File:
+
+```text
+tests/AdvancedCheckoutTests.robot
+```
+
+Test Cases:
+
+| ID | Description |
+|-|-|
+| TC_01 | User Can Apply Voucher And Book Successfully |
+| TC_02 | Booking Fails When CheckOut Date Is Before CheckIn Date |
+| TC_03 | Guest Must Login Before Successful Payment |
+
+---
+
 # Total Test Cases
 
 ```text
@@ -224,8 +263,12 @@ Authentication
 Login        12
 Register     13
 
+Business Flows
+Search       2
+Checkout     3
+
 =================
-Total: 25 Tests
+Total: 30 Tests
 =================
 ```
 

@@ -1,0 +1,8 @@
+CHECKIN_DATE = "xpath:(//input[@type='date'])[1]"
+CHECKOUT_DATE = "xpath:(//input[@type='date'])[2]"
+ADULT_PLUS_BUTTON = "xpath:(//button[contains(text(), '+')])[1]"
+ADULT_MINUS_BUTTON = "xpath:(//button[contains(text(), '-')])[1]"
+CHILD_PLUS_BUTTON = "xpath:(//button[contains(text(), '+')])[2]"
+CHILD_MINUS_BUTTON = "xpath:(//button[contains(text(), '-')])[2]"
+BOOK_NOW_BUTTON = "xpath://button[contains(@class,'py-4') and contains(@class,'text-white') and contains(@class,'w-full')]"
+ROOM_TITLE = "xpath://h1"

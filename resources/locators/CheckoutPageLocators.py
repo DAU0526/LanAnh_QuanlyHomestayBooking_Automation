@@ -1,0 +1,5 @@
+FULLNAME_INPUT = "id:name"
+EMAIL_INPUT = "id:email"
+PHONE_INPUT = "id:phone"
+CONFIRM_BOOKING_BTN = "xpath://button[@type='submit' and contains(@class,'w-full') and contains(@class,'bg-')]"
+SUCCESS_MESSAGE = "xpath://h1[contains(@class,'text-3xl')]"
