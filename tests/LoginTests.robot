@@ -1,5 +1,6 @@
 *** Settings ***
 Documentation    Test các luồng Đăng nhập hệ thống
+Library          SeleniumLibrary
 Library          String
 Resource         ../resources/common_keywords.resource
 Resource         ../resources/page_objects/LoginPage.resource
@@ -13,77 +14,71 @@ TC_01 Valid Login Should Succeed
     [Documentation]    Đăng nhập thành công với tài khoản hợp lệ
     Go To Login Page
     Login With Credentials    ${VALID_USER}    ${VALID_PASSWORD}
-    Alert Should Be Present    timeout=10s
-    Wait Until Location Is    ${BASE_URL}/    timeout=15s
-    Wait Until Element Is Visible    ${ACCOUNT_DROPDOWN}    15s
-    Verify User Is Logged In
+    Verify Login Success
 
 TC_02 Login With Empty Fields
-    [Documentation]    Bỏ trống cả Email và Password
+    [Documentation]    Bỏ trống cả Email và Password - hệ thống hiển thị lỗi HTML5
     Go To Login Page
     Login With Credentials    ${EMPTY}    ${EMPTY}
     Verify HTML5 Validation Message    id:email
 
 TC_03 Login With Empty Email
-    [Documentation]    Bỏ trống trường Email
+    [Documentation]    Bỏ trống trường Email - hệ thống hiển thị lỗi HTML5
     Go To Login Page
     Login With Credentials    ${EMPTY}    ${VALID_PASSWORD}
     Verify HTML5 Validation Message    id:email
 
 TC_04 Login With Empty Password
-    [Documentation]    Bỏ trống trường Password
+    [Documentation]    Bỏ trống trường Password - hệ thống hiển thị lỗi HTML5
     Go To Login Page
     Login With Credentials    ${VALID_USER}    ${EMPTY}
     Verify HTML5 Validation Message    id:password
 
 TC_05 Login With Unregistered Email
-    [Documentation]    Nhập Email chưa đăng ký trong hệ thống
+    [Documentation]    Email chưa đăng ký trong hệ thống - hệ thống báo lỗi
     Go To Login Page
     Login With Credentials    unregistered_email123@gmail.com    password123
     Verify Error Message Displayed
 
 TC_06 Login With Wrong Password
-    [Documentation]    Đăng nhập thất bại do sai mật khẩu
+    [Documentation]    Sai mật khẩu - hệ thống báo lỗi đăng nhập
     Go To Login Page
     Login With Credentials    ${VALID_USER}    wrongpassword
     Verify Error Message Displayed
 
 TC_07 Login With Invalid Email Format
-    [Documentation]    Nhập Email sai định dạng
+    [Documentation]    Email sai định dạng (thiếu @) - hệ thống hiển thị lỗi HTML5
     Go To Login Page
     Login With Credentials    invalid_email_format    ${VALID_PASSWORD}
     Verify HTML5 Validation Message    id:email
 
 TC_08 Login With Short Password
-    [Documentation]    Nhập Password ngắn hơn 6 ký tự
+    [Documentation]    Mật khẩu dưới 6 ký tự - hệ thống hiển thị cảnh báo
     Go To Login Page
     Login With Credentials    ${VALID_USER}    123
-    # May trigger backend validation or frontend alert
-    Run Keyword And Ignore Error    Alert Should Be Present    timeout=5s
+    Verify Short Password Behavior
 
 TC_09 Login With Uppercase Email
-    [Documentation]    Email viết hoa vẫn đăng nhập thành công
+    [Documentation]    Email viết hoa vẫn đăng nhập thành công (không phân biệt hoa/thường)
     Go To Login Page
     ${uppercase_email}=    Convert To Uppercase    ${VALID_USER}
     Login With Credentials    ${uppercase_email}    ${VALID_PASSWORD}
-    Alert Should Be Present    timeout=10s
-    Wait Until Location Is    ${BASE_URL}/    timeout=15s
+    Verify Login Success
 
 TC_10 Login With Email Containing Spaces
-    [Documentation]    Nhập email có khoảng trắng ở đầu hoặc cuối
+    [Documentation]    Email có khoảng trắng đầu/cuối - hệ thống tự trim hoặc chấp nhận
     Go To Login Page
     Login With Credentials    ${SPACE}${VALID_USER}${SPACE}    ${VALID_PASSWORD}
-    # It might pass or fail depending on if frontend trims spaces. Assuming it passes as per manual testcase.
-    Run Keyword And Ignore Error    Alert Should Be Present    timeout=10s
+    Verify Email With Spaces Behavior
 
 TC_14 Login With Wrong Password Case Sensitivity
-    [Documentation]    Nhập mật khẩu sai chữ hoa/thường (Case Sensitivity)
+    [Documentation]    Mật khẩu phân biệt hoa/thường - đăng nhập sai nếu sai case
     Go To Login Page
     ${uppercase_pass}=    Convert To Uppercase    ${VALID_PASSWORD}
     Login With Credentials    ${VALID_USER}    ${uppercase_pass}
     Verify Error Message Displayed
 
 TC_15 Password Field Is Masked
-    [Documentation]    Kiểm tra ẩn mật khẩu khi nhập (Password Masking)
+    [Documentation]    Trường mật khẩu được ẩn bằng dấu chấm vì lý do bảo mật
     Go To Login Page
     Verify Password Field Is Masked

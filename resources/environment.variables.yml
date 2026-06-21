@@ -1,4 +1,4 @@
-BASE_URL: "https://homestaybooking.id.vn"
+BASE_URL: "http://127.0.0.1:8000"
 BROWSER: "chrome"
 VALID_USER: "customer@gmail.com"
 VALID_PASSWORD: "password"

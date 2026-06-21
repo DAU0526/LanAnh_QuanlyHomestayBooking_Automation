@@ -11,6 +11,10 @@ Search For Homestay
     Input Text    ${NAME_SEARCH_INPUT}    ${homestay_name}
     Click Element    ${SEARCH_BUTTON}
 
+Verify Search Results Are Shown
+    [Documentation]    Kiểm tra trang kết quả tìm kiếm hiển thị sau khi search
+    Wait Until Location Contains    /listing    timeout=10s
+    Wait Until Element Is Visible    ${ROOM_CARDS}    10s
+
 Verify User Is Logged In
     Element Should Be Visible    ${ACCOUNT_DROPDOWN}
-
