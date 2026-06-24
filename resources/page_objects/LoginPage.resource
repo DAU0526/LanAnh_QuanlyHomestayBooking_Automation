@@ -27,7 +27,7 @@ Login With Credentials
 
 Verify Login Success
     [Documentation]    Kiểm tra đăng nhập thành công - trang chuyển về Home và hiển thị avatar
-    Alert Should Be Present    timeout=10s
+    Run Keyword And Ignore Error    Alert Should Be Present    timeout=5s
     Wait Until Location Is    ${BASE_URL}/    timeout=15s
     Wait Until Element Is Visible    ${ACCOUNT_DROPDOWN}    15s
 

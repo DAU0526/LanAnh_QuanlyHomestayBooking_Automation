@@ -5,16 +5,23 @@ Variables  ../locators/CheckoutPageLocators.py
 *** Keywords ***
 Enter Customer Details
     [Arguments]    ${name}    ${email}    ${phone}
+    Wait Until Element Is Not Visible    xpath=//*[contains(text(), 'Đang tải thông tin thanh toán')]    15s
     Wait Until Element Is Visible    ${FULLNAME_INPUT}    10s
-    # Use bulletproof JS setter for Vue/React
-    Execute Javascript    function setVueValue(id, val) { let el = document.getElementById(id); let setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set; setter.call(el, val); el.dispatchEvent(new Event('input', {bubbles: true})); }; setVueValue('name', '${name}'); setVueValue('email', '${email}'); setVueValue('phone', '${phone}');
+    Execute Javascript    let n=document.getElementById('name');n.value='${name}';n.dispatchEvent(new Event('input',{bubbles:true}));let e=document.getElementById('email');e.value='${email}';e.dispatchEvent(new Event('input',{bubbles:true}));let p=document.getElementById('phone');p.value='${phone}';p.dispatchEvent(new Event('input',{bubbles:true}));
 
 Click Confirm Booking
-    # Use JS click to ensure it's not intercepted by overlapping elements
-    Execute Javascript    document.querySelector("button[type='submit']").click()
+    Wait Until Element Is Visible    xpath=//button[@type='submit']    15s
+    Sleep    1s
+    Run Keyword And Ignore Error    Execute Javascript    document.querySelector("button[type='submit']").click()
 
 Verify Booking Success
-    # Native JS alerts in async callbacks can be flaky in headless Chrome (auto-dismissed or missed by polling).
-    # We optionally check for it, but rely on the actual page content for success verification.
-    Run Keyword And Ignore Error    Alert Should Be Present    timeout=3s
+    [Documentation]    Kiểm tra đặt phòng thành công - accept alert rồi chờ trang PaymentSuccess
+    ${alert_text}=    Handle Alert    timeout=15s
+    Wait Until Location Contains    /payment-success    timeout=15s
     Wait Until Page Contains    Thanh toán thành công    timeout=10s
+
+Verify Guest Cannot Book Without Login
+    [Documentation]    Kiểm tra Guest không thể thanh toán nếu chưa đăng nhập
+    ${alert_text}=    Handle Alert    timeout=10s
+    Should Contain    ${alert_text}    đăng nhập
+    Location Should Contain    /payment
