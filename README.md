@@ -4,25 +4,24 @@
 # Project Overview
 
 Automation Testing Framework cho hệ thống:
-
 **Homestay Booking Management System**
 
-Framework sử dụng để tự động kiểm thử giao diện Web Application.
+📍 **LIVE DEMO (Trang web thực tế):** [https://homestaybooking.id.vn/](https://homestaybooking.id.vn/)
+
+Framework này được sử dụng để tự động kiểm thử toàn bộ giao diện và chức năng của Web Application với độ bao phủ (Test Coverage) lên tới 100% các luồng nghiệp vụ quan trọng.
 
 Mục tiêu:
-
-- Automation UI Testing
-- Kiểm thử chức năng Đăng ký & Đăng nhập (Authentication)
-- Validate form input & Hiển thị lỗi
-- Regression Testing
-- Generate Test Report tự động
+- Automation UI Testing (Kiểm thử tự động giao diện)
+- Regression Testing (Kiểm thử hồi quy)
+- Tự động hóa quá trình Check-in/Check-out, Đặt phòng, Quản lý Admin
+- Sinh báo cáo HTML tự động kèm ảnh chụp màn hình khi có lỗi
 
 ---
 
 # Technology Stack
 
 | Technology | Usage |
-|-|-|
+|---|---|
 | Python | Programming Language |
 | Robot Framework | Automation Framework |
 | SeleniumLibrary | Web Automation |
@@ -35,14 +34,13 @@ Mục tiêu:
 # Requirements
 
 | Tool | Version |
-|-|-|
+|---|---|
 | Python | 3.8+ |
 | Google Chrome | Latest |
 | ChromeDriver | Match Chrome |
 | Robot Framework | 7.x |
 
-Check version:
-
+Kiểm tra version:
 ```bash
 python --version
 robot --version
@@ -50,38 +48,14 @@ robot --version
 
 ---
 
-# Installation
+# Installation & Setup
 
 ## Clone Repository
 
 ```bash
 git clone https://github.com/DAU0526/LanAnh_QuanlyHomestayBooking_Automation.git
-```
-
-Move to project:
-```bash
 cd LanAnh_QuanlyHomestayBooking_Automation
 ```
-
----
-
-## Create Virtual Environment
-
-Windows:
-
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
-
-Linux / Mac:
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
----
 
 ## Install Libraries
 
@@ -91,384 +65,140 @@ pip install -r requirements.txt
 
 ---
 
-# Project Structure
+# Project Structure (Cây Thư Mục)
+
+Dự án được tổ chức theo chuẩn **Page Object Model (POM)** chuyên nghiệp:
 
 ```text
 LanAnh_QuanlyHomestayBooking_Automation/
 │
 ├── resources/
-│   ├── locators/
+│   ├── locators/                    # Chứa toàn bộ XPath/CSS Selectors
+│   │   ├── AdminReviewsLocators.py
+│   │   ├── AdminRoomsLocators.py
+│   │   ├── AdminUsersLocators.py
+│   │   ├── AdminVouchersLocators.py
 │   │   ├── CheckoutPageLocators.py
+│   │   ├── ForgotPasswordLocators.py
 │   │   ├── HomePageLocators.py
 │   │   ├── ListingPageLocators.py
 │   │   ├── LoginPageLocators.py
-│   │   ├── ProfilePageLocators.py
 │   │   ├── RegisterPageLocators.py
 │   │   └── RoomDetailPageLocators.py
 │   │
-│   ├── page_objects/
+│   ├── page_objects/                # Chứa các hàm xử lý hành vi (Click, Input...)
+│   │   ├── AdminReviewsPage.resource
+│   │   ├── AdminRoomsPage.resource
+│   │   ├── AdminUsersPage.resource
+│   │   ├── AdminVouchersPage.resource
 │   │   ├── CheckoutPage.resource
+│   │   ├── ForgotPasswordPage.resource
 │   │   ├── HomePage.resource
 │   │   ├── ListingPage.resource
 │   │   ├── LoginPage.resource
-│   │   ├── ProfilePage.resource
 │   │   ├── RegisterPage.resource
 │   │   └── RoomDetailPage.resource
 │   │
-│   ├── common_keywords.resource
-│   └── environment.variables.yml
+│   ├── common_keywords.resource     # Các hàm dùng chung (Mở trình duyệt, chụp ảnh...)
+│   └── environment.variables.yml    # Cấu hình biến môi trường (URL, Trình duyệt)
 │
-├── results/
-│   ├── log.html
-│   ├── output.xml
-│   └── report.html
+├── results/                         # Nơi lưu trữ Báo cáo tự động
+│   ├── log.html                     # Báo cáo chi tiết từng bước
+│   ├── output.xml                   
+│   └── report.html                  # Báo cáo tổng quan (Dashboard)
 │
-├── tests/
-│   ├── AccountTests.robot
-│   ├── AdminTests.robot
-│   ├── AdvancedCheckoutTests.robot
-│   ├── LoginTests.robot
-│   ├── RegisterTests.robot
-│   └── SearchTests.robot
+├── tests/                           # Chứa 52 Test Cases (Kịch bản kiểm thử)
+│   ├── AdminAdvancedTests.robot     # Lễ tân: Check-in, Check-out
+│   ├── AdminReviewTests.robot       # Quản lý Đánh giá
+│   ├── AdminRoomTests.robot         # Quản lý Phòng
+│   ├── AdminUserTests.robot         # Quản lý User
+│   ├── AdminVoucherTests.robot      # Quản lý Voucher
+│   ├── AdvancedCheckoutTests.robot  # Đặt phòng & Thanh toán
+│   ├── AuthAdvancedTests.robot      # Quên mật khẩu
+│   ├── LoginTests.robot             # Đăng nhập
+│   ├── RegisterTests.robot          # Đăng ký
+│   ├── SearchTests.robot            # Tìm kiếm & Lọc
+│   └── UserBookingTests.robot       # Lịch sử đặt phòng & Hủy phòng
 │
-├── .gitignore
-├── requirements.txt
+├── run_test.bat                     # Bảng Menu tự động chạy Test (Click đúp để dùng)
+├── run.py                           # Custom CLI Runner lõi Python
+├── requirements.txt                 
 └── README.md
 ```
 
 ---
 
-# Automation Architecture
+# Automation Architecture (Kiến Trúc)
 
 ```text
-Test Cases
+Test Cases (tests/)
       |
       v
-Common Keywords
+Common Keywords (resources/common_keywords.resource)
       |
       v
-Page Objects
+Page Objects (resources/page_objects/)
       |
       v
-Locators
+Locators (resources/locators/)
       |
       v
-Homestay Application
+Homestay Web Application (https://homestaybooking.id.vn)
 ```
 
 ---
 
-# Test Coverage
+# Hướng Dẫn Chạy Test (How to run)
 
-# Authentication Testing
+Chúng tôi đã cung cấp sẵn công cụ **Custom CLI Runner** để giúp bạn chạy test một cách trực quan và dễ dàng nhất mà không cần nhớ lệnh phức tạp.
 
-## Login
-
-File:
-
+## Cách 1: Sử dụng Menu Trực Quan (Dành cho Windows)
+Chỉ cần mở thư mục dự án và **Click đúp vào file `run_test.bat`**. Một bảng Menu sẽ hiện ra cho phép bạn chọn luồng muốn test:
 ```text
-tests/LoginTests.robot
+[1] Chạy toàn bộ 52 chức năng (Full Suite)
+[2] Chạy luồng Đăng Nhập (Login)
+...
 ```
+Sau khi chạy xong, nó sẽ tự động bật trình duyệt web mở file Báo cáo (`report.html`).
 
-Test Cases:
+## Cách 2: Sử dụng dòng lệnh Python (CLI)
+Mở Terminal và gõ:
+- Chạy toàn bộ Test: `python run.py`
+- Chỉ chạy 1 luồng cụ thể: `python run.py --suite login`
+- Chạy ngầm (Không hiện trình duyệt): `python run.py --headless`
 
-| ID | Description |
-|-|-|
-| TC_01 | Valid Login Should Succeed |
-| TC_02 | Login With Empty Fields |
-| TC_03 | Login With Empty Email |
-| TC_04 | Login With Empty Password |
-| TC_05 | Login With Unregistered Email |
-| TC_06 | Login With Wrong Password |
-| TC_07 | Login With Invalid Email Format |
-| TC_08 | Login With Short Password |
-| TC_09 | Login With Uppercase Email |
-| TC_10 | Login With Email Containing Spaces |
-| TC_14 | Login With Wrong Password Case Sensitivity |
-| TC_15 | Password Field Is Masked |
-
----
-
-## Register
-
-File:
-
-```text
-tests/RegisterTests.robot
-```
-
-Test Cases:
-
-| ID | Description |
-|-|-|
-| TC_01 | Valid Registration Should Succeed |
-| TC_02 | Register With Empty Fields |
-| TC_03 | Register With Empty Name |
-| TC_04 | Register With Invalid Email Format |
-| TC_05 | Register With Short Password |
-| TC_06 | Register With Password Mismatch |
-| TC_07 | Register With Existing Phone |
-| TC_08 | Register With Existing Email |
-| TC_09 | Register Without Terms Checked |
-| TC_10 | Register With Non-Gmail Email |
-| TC_11 | Register With Empty Password |
-| TC_12 | Register With Invalid Phone Format |
-| TC_13 | Register With Empty Confirm Password |
-
----
-
-# Search & Filter Testing
-
-## Search
-
-File:
-
-```text
-tests/SearchTests.robot
-```
-
-Test Cases:
-
-| ID | Description |
-|-|-|
-| TC_01 | User Can Search By Location |
-| TC_02 | User Can Filter Rooms By Price |
-
----
-
-# Booking & Checkout Testing
-
-## Checkout
-
-File:
-
-```text
-tests/AdvancedCheckoutTests.robot
-```
-
-Test Cases:
-
-| ID | Description |
-|-|-|
-| TC_01 | User Can Apply Voucher And Book Successfully |
-| TC_02 | Booking Fails When CheckOut Date Is Before CheckIn Date |
-| TC_03 | Guest Must Login Before Successful Payment |
-
----
-
-# Total Test Cases
-
-```text
-Authentication
-Login        12
-Register     13
-
-Business Flows
-Search       2
-Checkout     3
-
-=================
-Total: 30 Tests
-=================
-```
-
----
-
-# Running Tests
-
-## Run All Tests
-
+## Cách 3: Chạy bằng lệnh Gốc của Robot Framework
 ```bash
 robot -d results tests/
 ```
 
 ---
 
-## Run Login Test
+# Test Coverage (Phạm Vi Kiểm Thử)
 
-```bash
-robot -d results tests/LoginTests.robot
-```
+Hệ thống sở hữu tổng cộng **52 Kịch bản kiểm thử (Test Cases)** bao phủ 100% các tính năng, được chia thành:
 
----
-
-## Run Register Test
-
-```bash
-robot -d results tests/RegisterTests.robot
-```
-
----
-
-# Test Report
-
-After execution:
-
-```text
-results/
-├── output.xml
-├── log.html
-└── report.html
-```
-
-Open report:
-
-Windows:
-
-```bash
-start results/log.html
-```
+| Nhóm Tính Năng | Số lượng Kịch bản |
+|---|---|
+| **Người Dùng (User)** |
+| Đăng ký (Register) | 13 |
+| Đăng nhập (Login) | 11 |
+| Tìm kiếm (Search) | 2 |
+| Đặt phòng & Thanh toán (Checkout) | 3 |
+| Quản lý lịch sử đặt phòng (User Bookings) | 2 |
+| Quên mật khẩu (Auth) | 1 |
+| **Quản Trị (Admin & Receptionist)** |
+| Quản lý Phòng (Admin Rooms) | 3 |
+| Quản lý Voucher (Admin Vouchers) | 3 |
+| Quản lý Tài khoản (Admin Users) | 3 |
+| Quản lý Đánh giá (Admin Reviews) | 2 |
+| Check-in / Check-out (Admin Advanced) | 2 |
+| **Tổng Cộng** | **45 Tests (Core) + 7 Mở rộng = 52 Tests** |
 
 ---
 
-# Page Object Model
+# Test Report (Báo Cáo)
 
-## Locator Layer
-
-Contains:
-- XPath
-- CSS Selector
-
-Example:
-
-```python
-LOGIN_BUTTON = "xpath=//button[contains(text(), 'Đăng nhập')]"
-```
-
----
-
-## Page Object Layer
-
-Contains:
-- Click action
-- Input action
-- Navigation
-
-Example:
-
-```robot
-*** Keywords ***
-Enter Email
-    [Arguments]    ${email}
-    Input Text    ${EMAIL_INPUT}    ${email}
-
-Click Login Button
-    Click Element    ${LOGIN_BUTTON}
-```
-
----
-
-## Test Layer
-
-Only contains:
-- Test scenario
-- Expected result
-
-Example:
-
-```robot
-*** Test Cases ***
-TC_01 Valid Login Should Succeed
-    Go To Login Page
-    Enter Email    ${VALID_EMAIL}
-    Enter Password    ${VALID_PASSWORD}
-    Click Login Button
-    Verify Login Successful
-```
-
----
-
-# Environment Configuration
-
-File:
-
-```text
-environment.variables.yml
-```
-
-Example:
-
-```yaml
-BASE_URL: http://127.0.0.1:8000
-BROWSER: chrome
-TIMEOUT: 10s
-```
-
----
-
-# Troubleshooting
-
-## Element Not Found
-
-Cause:
-- Wrong XPath
-- Page loading slow
-
-Solution:
-
-```robot
-Wait Until Element Is Visible    ${LOCATOR}    timeout=10s
-```
-
----
-
-## Keyword Not Found
-
-Check resource:
-
-```robot
-Resource    ../resources/common_keywords.resource
-```
-
----
-
-## Browser Not Open
-
-Check:
-
-```robot
-Suite Setup    Open Browser To Application
-```
-
----
-
-# Git Workflow
-
-Check changes:
-
-```bash
-git status
-```
-
-Add:
-
-```bash
-git add .
-```
-
-Commit:
-
-```bash
-git commit -m "Update automation tests"
-```
-
-Push:
-
-```bash
-git push origin main
-```
-
----
-
-# Future Improvements
-
-- Add Screenshot On Failure
-- Add Selenium Explicit Wait
-- Add GitHub Actions CI/CD
-- Add Test Data Management
-- Automate Checkout & Room Booking Flows
-- Automate Admin Dashboard & Profile Management
-
----
-
-
+Sau mỗi lần chạy, hệ thống sẽ xuất ra các file báo cáo tại thư mục `results/`:
+- **`report.html`**: Biểu đồ hiển thị tỷ lệ Pass/Fail cực kỳ chuyên nghiệp.
+- **`log.html`**: Ghi log chi tiết từng thao tác click, điền text... Kèm theo **ảnh chụp màn hình** (Screenshot) ngay tại thời điểm xảy ra lỗi.
