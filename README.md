@@ -4,12 +4,9 @@
 # Project Overview
 
 Automation Testing Framework cho hệ thống:
-**Homestay Booking Management System**
+**LIVE DEMO:** [https://homestaybooking.id.vn/](https://homestaybooking.id.vn/)
 
-📍 **LIVE DEMO (Trang web thực tế):** [https://homestaybooking.id.vn/](https://homestaybooking.id.vn/)
-
-Framework này được sử dụng để tự động kiểm thử toàn bộ giao diện và chức năng của Web Application với độ bao phủ (Test Coverage) lên tới 100% các luồng nghiệp vụ quan trọng.
-
+**LƯU Ý:** Toàn bộ kịch bản Automation Test trong kho chứa này được cấu hình để **chạy và kiểm thử trên môi trường Local** ( `http://localhost:8000`) 
 Mục tiêu:
 - Automation UI Testing (Kiểm thử tự động giao diện)
 - Regression Testing (Kiểm thử hồi quy)
@@ -143,7 +140,7 @@ Page Objects (resources/page_objects/)
 Locators (resources/locators/)
       |
       v
-Homestay Web Application (https://homestaybooking.id.vn)
+Homestay Web Application (Localhost: http://127.0.0.1:8000)
 ```
 
 ---
